@@ -34,22 +34,20 @@ async fn main() {
         .unwrap();
 }
 
-async fn about_page() -> String {
-    "Hellow".to_string()
+async fn about_page() -> Markup {
+    let content = html! {
+        div hx-trigger="load" hx-get="/navbar?active=about"{}
+    };
+    page::page(content)
 }
 
 async fn index() -> Markup {
-    let host = format!("{}", "Nithin");
-    let title = "Nithin Muthukumar";
-    let desc = "Personal Website";
-    let lang = "en";
-    // TODO: Add your site or application content here.
     let content = html! {
         div hx-trigger="load" hx-get="/navbar?active=home"{}
         h1 {"Nithin Muthukumar"}
 
     };
-    page::page(&host, title, desc, lang, content)
+    page::page(content)
 }
 #[derive(Deserialize, Debug)]
 pub struct NavParams {
@@ -59,22 +57,15 @@ async fn navbar(Query(params): Query<NavParams>) -> Markup {
     let pages = [("/", "Home"), ("/about", "About"), ("/resume", "Resume")];
 
     html! {
-        (DOCTYPE)
-        html{
-            body {
-                nav {
-                    @for page in pages{
-                        @if page.1.to_lowercase()==params.active{
-                            a #active href=(page.0) {(page.1)}
-                        }
-                        @else{
-                            a href=(page.0) {(page.1)}
-                        }
-                    }
+        nav {
+            @for page in pages{
+                @if page.1.to_lowercase()==params.active{
+                    a #active href=(page.0) {(page.1)}
+                }
+                @else{
+                    a href=(page.0) {(page.1)}
                 }
             }
-
-
         }
     }
 }

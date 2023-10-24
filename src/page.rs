@@ -35,7 +35,12 @@ fn head(title: &str, desc: &str, url: &str) -> Markup {
     }
 }
 
-pub(crate) fn page(host: &str, title: &str, desc: &str, lang: &str, content: Markup) -> Markup {
+pub(crate) fn page(content: Markup) -> Markup {
+    let host = "nithinmuthukumar.com";
+    let title = "Nithin Muthukumar";
+    let desc = "Personal Website";
+    let lang = "en";
+
     html! {
         (DOCTYPE)
         html class="no-js" lang=(lang) {
