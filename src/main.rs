@@ -9,6 +9,7 @@ use maud::{html, Markup, PreEscaped, DOCTYPE};
 use rand::{thread_rng, Rng};
 use serde::Deserialize;
 use std::{net::SocketAddr, path::Path};
+use tower::ServiceExt;
 use tower_http::services::{ServeDir, ServeFile};
 
 mod page;
@@ -19,10 +20,11 @@ async fn main() {
     let serve_dir = ServeDir::new("src/static");
 
     let app = Router::new()
-        .nest_service("/", serve_dir)
-        .route("/home", get(index))
-        .route("/hello", post(hello))
-        .route("/about", get(about_page));
+        .nest_service("/assets", serve_dir)
+        .route("/", get(index))
+        .route("/about", get(about_page))
+        .route("/navbar", get(navbar))
+        .fallback(not_found);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("listening on {}", addr);
@@ -38,33 +40,41 @@ async fn about_page() -> String {
 
 async fn index() -> Markup {
     let host = format!("{}", "Nithin");
-    let title = "actix-maud-htmx-h5bp";
-    let desc = "This is a template. There are many like it but this one is mine.";
+    let title = "Nithin Muthukumar";
+    let desc = "Personal Website";
     let lang = "en";
     // TODO: Add your site or application content here.
     let content = html! {
-        #content {
-            p { "Hello world! This is HTML5 Boilerplate." }
-        }
-        form hx-post="/hello" hx-target="#content" hx-swap="outerHTML" {
-            div {
-                label { "What's your name? " }
-                input type="text" name="name" value="" {}
-            }
-            button { "Submit" }
-        }
+        div hx-trigger="load" hx-get="/navbar?active=home"{}
+        h1 {"Nithin Muthukumar"}
+
     };
     page::page(&host, title, desc, lang, content)
 }
-#[derive(Deserialize)]
-struct UserInfo {
-    name: String,
+#[derive(Deserialize, Debug)]
+pub struct NavParams {
+    active: String,
 }
+async fn navbar(Query(params): Query<NavParams>) -> Markup {
+    let pages = [("/", "Home"), ("/about", "About"), ("/resume", "Resume")];
 
-async fn hello(Form(user): Form<UserInfo>) -> Markup {
     html! {
-        #content {
-            p { "Hello " (user.name) "! This is HTMX." }
+        (DOCTYPE)
+        html{
+            body {
+                nav {
+                    @for page in pages{
+                        @if page.1.to_lowercase()==params.active{
+                            a #active href=(page.0) {(page.1)}
+                        }
+                        @else{
+                            a href=(page.0) {(page.1)}
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 }

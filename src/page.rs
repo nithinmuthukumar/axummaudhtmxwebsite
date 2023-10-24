@@ -5,10 +5,10 @@ fn body(content: Markup) -> Markup {
     html! {
         body {
             (content)
-            script src="js/vendor/htmx.min.js" {}
-            script src="js/vendor/modernizr-3.11.2.min.js" {}
-            script src="js/plugins.js" {}
-            script src="js/main.js" {}
+            script src="assets/js/vendor/htmx.min.js" {}
+            script src="assets/js/vendor/modernizr-3.11.2.min.js" {}
+            script src="assets/js/plugins.js" {}
+            script src="assets/js/main.js" {}
         }
     }
 }
@@ -26,8 +26,10 @@ fn head(title: &str, desc: &str, url: &str) -> Markup {
             meta property="og:image" content="";
             link rel="manifest" href="site.webmanifest";
             link rel="apple-touch-icon" href="icon.png";
-            link rel="stylesheet" href="css/normalize.css";
-            link rel="stylesheet" href="css/main.css";
+            link rel="stylesheet" href="assets/css/normalize.css";
+            link rel="stylesheet" href="assets/css/main.css";
+            link rel="stylesheet" href="assets/css/style.css";
+
             meta name="theme-color" content="#fafafa";
         }
     }

@@ -1,0 +1,6 @@
+a {
+  text-decoration: none; /* Removes the underline */
+}
+#active {
+  color: #c7444a;
+}
