@@ -24,8 +24,8 @@ fn head(title: &str, desc: &str, url: &str) -> Markup {
             meta property="og:type" content=(strings::WEBSITE);
             meta property="og:url" content=(url);
             meta property="og:image" content="";
-            link rel="manifest" href="site.webmanifest";
-            link rel="apple-touch-icon" href="icon.png";
+            link rel="manifest" href="assets/site.webmanifest";
+            link rel="apple-touch-icon" href="assets/icon.png";
             link rel="stylesheet" href="assets/css/normalize.css";
             link rel="stylesheet" href="assets/css/main.css";
             link rel="stylesheet" href="assets/css/style.css";

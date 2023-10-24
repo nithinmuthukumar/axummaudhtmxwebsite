@@ -44,7 +44,25 @@ async fn about_page() -> Markup {
 async fn index() -> Markup {
     let content = html! {
         div hx-trigger="load" hx-get="/navbar?active=home"{}
-        h1 {"Nithin Muthukumar"}
+        div #home{
+        div #intro{
+            h1 {"Nithin Muthukumar"}
+            h3{"4th Year CS student @ University of Windsor."}
+        }
+        div .links{
+            img .icon src="assets/img/github_icon.png";
+            img .icon src="assets/img/devpost_icon.png";
+            img .icon src="assets/img/itch_icon.png";
+            img .icon src="assets/img/linkedin_icon.png";
+
+
+        }
+        }
+
+
+
+
+
 
     };
     page::page(content)
