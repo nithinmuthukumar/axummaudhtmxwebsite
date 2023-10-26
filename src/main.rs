@@ -46,8 +46,7 @@ async fn index() -> Markup {
         div hx-trigger="load" hx-get="/navbar?active=home"{}
         div #home{
         div #intro{
-            h1 {"Nithin Muthukumar"}
-            h3{"4th Year CS student @ University of Windsor."}
+            h1 class="text-red-800 font-bold"{"Nithin Muthukumar"}
         }
         div .links{
             img .icon src="assets/img/github_icon.png";
@@ -76,13 +75,20 @@ async fn navbar(Query(params): Query<NavParams>) -> Markup {
 
     html! {
         nav {
+            ul{
             @for page in pages{
                 @if page.1.to_lowercase()==params.active{
+                    li{
                     a #active href=(page.0) {(page.1)}
+
+
+                    }
                 }
                 @else{
-                    a href=(page.0) {(page.1)}
+                    li{a class="hover:underline" href=(page.0) {(page.1)}
+                    }
                 }
+            }
             }
         }
     }
