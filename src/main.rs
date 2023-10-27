@@ -37,6 +37,23 @@ async fn main() {
 async fn about_page() -> Markup {
     let content = html! {
         div hx-trigger="load" hx-get="/navbar?active=about"{}
+        div class ="container mx-auto py-8"{
+            div class ="bg-white p-4 rounded-lg shadow-lg"{
+                h2 class="text-2xl font-semibold"{
+                    "Hey There!"
+                }
+
+                p class="mt-4"{
+                    "I'm currently a 4th year Computer Science student at University of Windsor."
+                }
+                p class="mt-4"{
+                    "I'm currently a 4th year Computer Science student at University of Windsor."
+                }
+
+            }
+
+        }
+
     };
     page::page(content)
 }
@@ -44,25 +61,31 @@ async fn about_page() -> Markup {
 async fn index() -> Markup {
     let content = html! {
         div hx-trigger="load" hx-get="/navbar?active=home"{}
-        div #home{
-        div #intro{
-            h1 class="text-red-800 font-bold"{"Nithin Muthukumar"}
+        div class="min-h-screen flex items-center justify-center flex-col space-y-10"{
+            div class=""{
+                h1 class="text-center text-red-800 text-5xl md:text-7xl lg:text-9xl font-bold "{"Nithin Muthukumar"}
+            }
+            div class="mx-auto flex justify-between w-1/4"{
+
+                a href="https://github.com/nithinmuthukumar"{
+
+                    img class="w-20 transition-transform transform scale-100 hover:scale-110" src="assets/img/github_icon.png";
+                }
+                a href="https://devpost.com/nithinmuthukumar"{
+
+                img class="w-24 transition-transform transform scale-100 hover:scale-110" src="assets/img/devpost_icon.png";
+                }
+                a href="https://nithinmuthukumar.itch.io"{
+
+                    img class="w-20 transition-transform transform scale-100 hover:scale-110 " src="assets/img/itch_icon.png";
+                }
+                a href="https://www.linkedin.com/in/nithin-muthukumar-681219162/"{
+
+                img class="w-20 transition-transform transform scale-100 hover:scale-110" src="assets/img/linkedin_icon.png";
+                }
+
+            }
         }
-        div .links{
-            img .icon src="assets/img/github_icon.png";
-            img .icon src="assets/img/devpost_icon.png";
-            img .icon src="assets/img/itch_icon.png";
-            img .icon src="assets/img/linkedin_icon.png";
-
-
-        }
-        }
-
-
-
-
-
-
     };
     page::page(content)
 }
@@ -74,18 +97,18 @@ async fn navbar(Query(params): Query<NavParams>) -> Markup {
     let pages = [("/", "Home"), ("/about", "About"), ("/resume", "Resume")];
 
     html! {
-        nav {
-            ul{
+        nav class="bg-gray-100 p-4"{
+            ul class="flex space-x-4"{
             @for page in pages{
                 @if page.1.to_lowercase()==params.active{
                     li{
-                    a #active href=(page.0) {(page.1)}
+                    a class="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold disabled" href=(page.0) {(page.1)}
 
 
                     }
                 }
                 @else{
-                    li{a class="hover:underline" href=(page.0) {(page.1)}
+                    li{a class="text-red-500 hover:text-red-700 hover:underline px-4 py-2 rounded" href=(page.0) {(page.1)}
                     }
                 }
             }

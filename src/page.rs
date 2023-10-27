@@ -26,10 +26,7 @@ fn head(title: &str, desc: &str, url: &str) -> Markup {
             meta property="og:image" content="";
             link rel="manifest" href="assets/site.webmanifest";
             link rel="apple-touch-icon" href="assets/icon.png";
-            //so I don't have to build everytime TODO remove in production
-            link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet";
-            // link rel="stylesheet" href="assets/css/style.css";
-            // link rel = "stylesheet" href="assets/css/main.css";
+            link rel = "stylesheet" href="assets/css/main.css";
 
             meta name="theme-color" content="#fafafa";
         }
